@@ -13,6 +13,8 @@ export default {
 <style lang="less" scoped>
 .pageMain {
   width: 100%;
+  overflow: auto;
+  padding: 20px;
 }
 // transition
 .fade-page-enter-active,

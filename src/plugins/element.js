@@ -35,8 +35,8 @@ import {
   // Tooltip,
   // Form,
   // FormItem,
-  // Tabs,
-  // TabPane,
+  Tabs,
+  TabPane,
   // Tag,
   // Tree,
   // Alert,
@@ -47,8 +47,8 @@ import {
   // Upload,
   // Progress,
   // Spinner,
-  Badge
-  // Card,
+  Badge,
+  Card
   // Rate,
   // Steps,
   // Step,
@@ -114,8 +114,8 @@ Vue.use(BreadcrumbItem)
 // Vue.use(Tooltip)
 // Vue.use(Form)
 // Vue.use(FormItem)
-// Vue.use(Tabs)
-// Vue.use(TabPane)
+Vue.use(Tabs)
+Vue.use(TabPane)
 // Vue.use(Tag)
 // Vue.use(Tree)
 // Vue.use(Alert)
@@ -127,7 +127,7 @@ Vue.use(BreadcrumbItem)
 // Vue.use(Progress)
 // Vue.use(Spinner)
 Vue.use(Badge)
-// Vue.use(Card)
+Vue.use(Card)
 // Vue.use(Rate)
 // Vue.use(Steps)
 // Vue.use(Step)

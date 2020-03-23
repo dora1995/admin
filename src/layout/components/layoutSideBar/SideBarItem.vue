@@ -1,29 +1,26 @@
 <template>
   <div class="sideItem" v-if="!item.hidden">
-    <template
-      v-if="
-        hasOnlyChild(item.children, item) &&
-          (!childItem.children || childItem.noChild)
-      "
-    >
-      <page-link v-if="childItem.meta" :to="resolvePath(childItem.path)">
-        <el-menu-item :index="resolvePath(childItem.path)">
-          <i :class="childItem.meta.icon ? childItem.meta.icon : ''"></i>
+    <template v-if="hasOnlyChild(item.children)">
+      <page-link :to="childItemPath">
+        <el-menu-item :index="childItemPath">
+          <i :class="childItem.meta.icon || ''"></i>
           <span slot="title">{{ childItem.meta.title }}</span>
         </el-menu-item>
       </page-link>
     </template>
     <el-submenu v-else :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <i :class="item.meta.icon ? item.meta.icon : ''"></i>
+        <i :class="item.meta.icon || ''"></i>
         <span>{{ item.meta.title }}</span>
       </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :item="child"
-        :basePath="resolvePath(child.path)"
-      ></sidebar-item>
+      <template v-for="child in item.children">
+        <page-link :to="resolvePath(child.path)" :key="child.path">
+          <el-menu-item :index="resolvePath(child.path)">
+            <i :class="child.meta.icon || ''"></i>
+            <span slot="title">{{ child.meta.title }}</span>
+          </el-menu-item>
+        </page-link>
+      </template>
     </el-submenu>
   </div>
 </template>
@@ -31,7 +28,6 @@
 <script>
 import PageLink from './Link'
 import { isAbsolutePath } from '@/utils/validate'
-import path from 'path'
 export default {
   name: 'SidebarItem',
   props: {
@@ -46,25 +42,19 @@ export default {
   },
   data() {
     return {
-      childItem: null
+      childItem: null,
+      childItemPath: ''
     }
   },
   methods: {
     hasOnlyChild(children = [], item) {
-      // debugger
       let newChildren = children.filter(obj => {
-        if (obj.hidden) {
-          return false
-        } else {
-          return true
-        }
+        return !obj.hidden
       })
-      if (newChildren.length === 1 && !item.meta) {
+      console.log(newChildren)
+      if (newChildren.length === 1) {
         this.childItem = newChildren[0]
-        return true
-      }
-      if (newChildren.length === 0) {
-        this.childItem = { ...item, path: '', noChild: true }
+        this.childItemPath = this.resolvePath(newChildren[0].path)
         return true
       }
       return false
@@ -76,7 +66,9 @@ export default {
       if (isAbsolutePath(this.basePath)) {
         return this.basePath
       }
-      return path.join(this.basePath, router)
+      let path = `${this.basePath == '/' ? '' : this.basePath}/${router}`
+      console.log(path)
+      return path
     }
   },
   components: {

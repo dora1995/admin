@@ -48,7 +48,6 @@ export default {
     line-height: @headerHeight;
     color: #ffffff;
     background: @logoBgColor;
-    box-sizing: border-box;
     border-bottom: 1px solid @logoBorderColor;
     transition: width 0.3s;
     overflow: hidden;
@@ -69,6 +68,7 @@ export default {
     height: 100%;
     background: #ffffff;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid @headerBorderColor;
     transition: all 0.3s;
     overflow: hidden;
     .header_right_left {
