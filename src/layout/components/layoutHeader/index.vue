@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="logo">
+    <div class="logo" title="回到首页">
       <img src="./logo.png" alt="logo" class="logoImg" />
       <span class="logoName">Vue-Admin</span>
     </div>
@@ -10,7 +10,7 @@
         <breadCrumb class="bc" />
       </div>
       <div class="header_right_right">
-        <badge class="rItem bd" />
+        <badge class="rItem" />
         <userDropdown class="rItem ud" />
       </div>
     </div>
@@ -93,6 +93,7 @@ export default {
       margin-right: 20px;
       line-height: @headerHeight;
       .rItem {
+        height: 100%;
         display: inline-block;
         margin-right: 10px;
         padding: 0 10px;
@@ -103,13 +104,9 @@ export default {
           margin-right: 0;
         }
       }
-      .bd {
-        // vertical-align: middle;
-        line-height: @headerHeight;
-      }
-      .ud {
-        vertical-align: middle;
-      }
+      // .ud {
+      //   vertical-align: middle;
+      // }
     }
   }
 }

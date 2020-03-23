@@ -1,7 +1,7 @@
 const state = {
   sideBarOpened: sessionStorage.getItem('layout_sideBar_opened')
     ? sessionStorage.getItem('layout_sideBar_opened')
-    : 'false',
+    : 'false'
 }
 const mutations = {
   SET_SIDEBAR_OPENED(state, payload) {
@@ -9,9 +9,7 @@ const mutations = {
     sessionStorage.setItem('layout_sideBar_opened', payload)
   }
 }
-const actions = {
-
-}
+const actions = {}
 export default {
   namespaced: true,
   state,

@@ -45,6 +45,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .userDropdown {
+  height: 100%;
+  vertical-align: middle;
   .userDd {
     cursor: pointer;
     .userDrop_text {
