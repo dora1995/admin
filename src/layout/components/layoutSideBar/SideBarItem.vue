@@ -27,7 +27,7 @@
 
 <script>
 import PageLink from './Link'
-import { isAbsolutePath } from '@/utils/validate'
+import { isAbsolutePath } from '@/utils/urlValidate'
 export default {
   name: 'SidebarItem',
   props: {
