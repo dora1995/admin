@@ -1,6 +1,10 @@
 <template>
   <div class="header">
-    <div class="logo" title="回到首页">
+    <div
+      class="logo"
+      title="回到首页"
+      :class="{ sideBarClose: sideBar_opened }"
+    >
       <img src="./logo.png" alt="logo" class="logoImg" />
       <span class="logoName">Vue-Admin</span>
     </div>
@@ -22,7 +26,7 @@ import sideCollapse from './components/sideCollapse'
 import breadCrumb from './components/breadCrumb'
 import userDropdown from './components/userDropdown'
 import badge from './components/badge'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'layoutHeader',
   components: {
@@ -30,6 +34,9 @@ export default {
     breadCrumb,
     userDropdown,
     badge
+  },
+  computed: {
+    ...mapGetters(['sideBar_opened'])
   }
 }
 </script>
@@ -42,7 +49,8 @@ export default {
   .logo {
     height: 100%;
     width: @sideBarWidth;
-    text-align: center;
+    // text-align: center;
+    padding: 0 18px;
     font-size: 18px;
     font-weight: bold;
     line-height: @headerHeight;
@@ -61,6 +69,9 @@ export default {
       font-size: 15px;
       font-weight: bold;
       vertical-align: middle;
+    }
+    &.sideBarClose {
+      width: @hideSideBarWidth;
     }
   }
   .header_right {

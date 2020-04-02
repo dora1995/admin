@@ -1,78 +1,77 @@
 <template>
-  <div class="sideItem" v-if="!item.hidden">
-    <template v-if="hasOnlyChild(item.children)">
-      <page-link :to="childItemPath">
-        <el-menu-item :index="childItemPath">
-          <i :class="childItem.meta.icon || ''"></i>
-          <span slot="title">{{ childItem.meta.title }}</span>
-        </el-menu-item>
-      </page-link>
+  <el-menu-item :index="basePath" v-if="cLength == 0">
+    <i :class="item.meta.icon || ''"></i>
+    <span slot="title">{{ item.meta.title }}</span>
+  </el-menu-item>
+  <el-menu-item
+    :index="resolvePath(basePath, children[0].path)"
+    v-else-if="cLength == 1"
+  >
+    <i :class="children[0].meta.icon || ''"></i>
+    <span slot="title">{{ children[0].meta.title }}</span>
+  </el-menu-item>
+  <el-submenu :index="basePath" v-else>
+    <template slot="title">
+      <i :class="item.meta.icon || ''"></i>
+      <span>{{ item.meta.title }}</span>
     </template>
-    <el-submenu v-else :index="resolvePath(item.path)" popper-append-to-body>
+    <el-menu-item
+      :index="resolvePath(basePath, c.path)"
+      v-for="c in children"
+      :key="c.name"
+    >
       <template slot="title">
-        <i :class="item.meta.icon || ''"></i>
-        <span>{{ item.meta.title }}</span>
+        <i :class="c.meta.icon || ''"></i>
+        <span>{{ c.meta.title }}</span>
       </template>
-      <template v-for="child in item.children">
-        <page-link :to="resolvePath(child.path)" :key="child.path">
-          <el-menu-item :index="resolvePath(child.path)">
-            <i :class="child.meta.icon || ''"></i>
-            <span slot="title">{{ child.meta.title }}</span>
-          </el-menu-item>
-        </page-link>
-      </template>
-    </el-submenu>
-  </div>
+    </el-menu-item>
+  </el-submenu>
 </template>
-
 <script>
-import PageLink from './Link'
+// 一般业务有两级导航栏就够用了
+// 根据router/index文件中路由的定义，如果有布局页面的，必定包含children属性（至少一个）
+// 所以根据children的数组长度判断是否渲染多个子导航栏
+// - 数量为0时，生成对应路由导航
+// - 数量为1时，仅生成一级导航栏
+// - 数量大于1时，生成一级导航栏以及多个二级导航栏
 import { isAbsolutePath } from '@/utils/validate'
 export default {
-  name: 'SidebarItem',
+  name: 'SidebarItem2',
   props: {
     item: {
       type: Object,
       required: true
-    },
-    basePath: {
-      type: String,
-      default: ''
     }
   },
   data() {
     return {
-      childItem: null,
-      childItemPath: ''
+      children: [],
+      onlyOne: false,
+      basePath: ''
     }
   },
   methods: {
-    hasOnlyChild(children = [], item) {
-      let newChildren = children.filter(obj => {
-        return !obj.hidden
-      })
-      console.log(newChildren)
-      if (newChildren.length === 1) {
-        this.childItem = newChildren[0]
-        this.childItemPath = this.resolvePath(newChildren[0].path)
-        return true
+    resolvePath(base, path) {
+      if (isAbsolutePath(path)) {
+        return path
       }
-      return false
-    },
-    resolvePath(router) {
-      if (isAbsolutePath(router)) {
-        return router
+      if (isAbsolutePath(base)) {
+        return base
       }
-      if (isAbsolutePath(this.basePath)) {
-        return this.basePath
-      }
-      let path = `${this.basePath == '/' ? '' : this.basePath}/${router}`
-      console.log(path)
-      return path
+      let cpath = `${base}/${path}`
+      console.log(cpath)
+      return cpath
     }
   },
-  components: {
-    PageLink
+  created() {
+    this.cLength = this.item.children ? this.item.children.length : 0
+    this.children = this.item.children
+    this.basePath = this.item.path == '/' ? '' : this.item.path
   }
 }
 </script>
+<style lang="less" scoped>
+.sideItem {
+  background: #000;
+}
+</style>

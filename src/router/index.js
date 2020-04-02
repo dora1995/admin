@@ -22,6 +22,40 @@ export const commonRoute = [
     component: () => import(/* webpackChunkName: '404' */ '@/views/404/404.vue')
   },
   {
+    path: '/friends',
+    name: 'friends',
+    meta: {
+      title: '友情链接',
+      icon: 'el-icon-s-flag'
+    },
+    children: [
+      {
+        path: 'http://www.baidu.com',
+        name: 'baidu',
+        meta: {
+          title: '百度',
+          icon: 'el-icon-s-flag'
+        }
+      },
+      {
+        path: 'https://www.jianshu.com/p/f8145c799456',
+        name: 'jianshu',
+        meta: {
+          title: '简书',
+          icon: 'el-icon-s-flag'
+        }
+      },
+      {
+        path: 'https://es6.ruanyifeng.com/',
+        name: 'es6',
+        meta: {
+          title: 'es6',
+          icon: 'el-icon-s-flag'
+        }
+      }
+    ]
+  },
+  {
     path: '/',
     name: 'Home',
     component: Layout,

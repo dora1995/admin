@@ -5,7 +5,7 @@ const state = {
 }
 const mutations = {
   SET_SIDEBAR_OPENED(state, payload) {
-    state.opened = String(payload)
+    state.sideBarOpened = String(payload)
     sessionStorage.setItem('layout_sideBar_opened', payload)
   }
 }

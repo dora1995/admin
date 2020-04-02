@@ -5,21 +5,18 @@
       background-color="#3a3f51"
       text-color="#b5b6bd"
       active-text-color="rgb(79, 148, 212)"
-      mode="vertical"
-      :collapse-transition="false"
       :collapse="sideBar_opened"
+      :collapse-transition="false"
+      :unique-opened="true"
+      @select="menuSelect"
     >
-      <sidebar-item
-        v-for="item in routes"
-        :key="item.path"
-        :item="item"
-        :basePath="item.path"
-      ></sidebar-item>
+      <SidebarItem v-for="item in calcRoutes" :key="item.name" :item="item" />
     </el-menu>
   </div>
 </template>
 <script>
-import SidebarItem from './SideBarItem'
+import { isAbsolutePath } from '@/utils/validate'
+import SidebarItem from './sideBarItem'
 import { mapGetters } from 'vuex'
 export default {
   name: 'layoutSideBar',
@@ -30,10 +27,32 @@ export default {
     ...mapGetters(['routes', 'sideBar_opened']),
     activeMenu() {
       return this.$route.path
+    },
+    calcRoutes() {
+      // 去除掉第一层hidden:true的路由
+      let arr = []
+      if (this.routes) {
+        arr = this.routes.filter(item => {
+          return !item.hidden
+        })
+      }
+      return arr
+    }
+  },
+  methods: {
+    menuSelect(index) {
+      let isAbsolute = isAbsolutePath(index)
+      if (isAbsolute) {
+        window.open(index, '_blank')
+        return true
+      } else {
+        this.$router.push(index)
+        return true
+      }
     }
   },
   created() {
-    console.log(this.routes)
+    console.log('layoutSideBar created')
   }
 }
 </script>

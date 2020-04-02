@@ -5,7 +5,7 @@
       'el-icon-s-unfold': this.sideBar_opened,
       'el-icon-s-fold': !sideBar_opened
     }"
-    @click="toggleOpen()"
+    @click="toggleOpen"
   ></i>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   methods: {
     toggleOpen() {
       console.log('sideCollapse click')
-      // this.$store.commit('layout/SET_SIDEBAR_OPENED', !this.sideBar_opened)
+      this.$store.commit('layout/SET_SIDEBAR_OPENED', !this.sideBar_opened)
     }
   }
 }
