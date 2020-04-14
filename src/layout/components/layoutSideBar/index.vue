@@ -15,8 +15,8 @@
   </div>
 </template>
 <script>
-import { isAbsolutePath } from '@/utils/validate'
-import SidebarItem from './sideBarItem'
+import { isAbsolutePath } from '@/utils/urlValidate'
+import SidebarItem from './SideBarItem'
 import { mapGetters } from 'vuex'
 export default {
   name: 'layoutSideBar',

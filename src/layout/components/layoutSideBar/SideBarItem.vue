@@ -34,7 +34,7 @@
 // - 数量为0时，生成对应路由导航
 // - 数量为1时，仅生成一级导航栏
 // - 数量大于1时，生成一级导航栏以及多个二级导航栏
-import { isAbsolutePath } from '@/utils/validate'
+import { isAbsolutePath } from '@/utils/urlValidate'
 export default {
   name: 'SidebarItem2',
   props: {
