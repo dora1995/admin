@@ -1,9 +1,11 @@
 import axios from 'axios'
 
+const HTTPSUCCESS = ['0000']
+const baseURL = process.env.VUE_APP_BASE_API || ''
 const http = axios.create({
-  timeout: 30000
+  timeout: 30000,
+  baseURL
 })
-
 // 请求拦截器
 http.interceptors.request.use(
   config => {
@@ -15,12 +17,22 @@ http.interceptors.request.use(
 )
 // 响应拦截器
 http.interceptors.response.use(
-  response => {
-    const code = response.status
-    if ((code >= 200 && code < 300) || code === 304) {
-      return Promise.resolve(response.data)
+  res => {
+    const status = res.status
+    const code = res.data.code
+    let statusok = false
+    let codeok = false
+    if ((status >= 200 && status < 300) || status === 304) {
+      statusok = true
+    }
+    if (statusok && HTTPSUCCESS.includes(code)) {
+      codeok = true
+    }
+
+    if (statusok && codeok) {
+      return Promise.resolve(res.data.data)
     } else {
-      return Promise.reject(response)
+      return Promise.reject(res.data || res)
     }
   },
   error => {
@@ -28,7 +40,7 @@ http.interceptors.response.use(
       const status = error.response.status
       switch (status) {
         case 401:
-          store.commit('DEL_TOKEN')
+          // todo to login
           router.replace({
             path: '/login',
             query: {
@@ -37,17 +49,17 @@ http.interceptors.response.use(
           })
           break
         case 404:
-          Message.error('网络请求不存在')
+          console.error('网络请求不存在')
           break
         default:
-          Message.error(error.response.data.message)
+          console.error(error.response.data.message)
       }
     } else {
       // 请求超时或者网络有问题
       if (error.message.includes('timeout')) {
-        Message.error('请求超时！请检查网络是否正常')
+        console.error('请求超时!请检查网络是否正常')
       } else {
-        Message.error('请求失败，请检查网络是否已连接')
+        console.error('请求失败!请检查网络是否已连接')
       }
     }
     return Promise.reject(error)

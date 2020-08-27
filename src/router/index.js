@@ -108,61 +108,6 @@ export const commonRoute = [
   }
 ]
 
-// const routes = [
-//   {
-//     path: '/',
-//     name: 'Home',
-//     component: Home
-//   },
-//   {
-//     path: '/about',
-//     name: 'About',
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: 'about' */ '../views/About.vue')
-//   },
-//   {
-//     path: '/hk',
-//     name: 'Hk',
-//     meta: {
-//       title: '胡凯的首页'
-//     },
-//     redirect: '/hk/index',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         name: 'Hk-index',
-//         meta: { title: '个人中心' },
-//         component: () =>
-//           import(/* webpackChunkName: 'Hk-index' */ '@/views/hk/hk.vue')
-//       }
-//     ]
-//   },
-//   {
-//     path: '/icons',
-//     component: Layout,
-//     name: 'Icons',
-//     redirect: '/icons/index',
-//     children: [
-//       {
-//         path: 'index',
-//         name: 'Icons-index',
-//         meta: {
-//           title: 'Icons图标',
-//           icon: 'el-icon-picture-outline'
-//         },
-//         component: () =>
-//           import(
-//             /* webpackChunkName: 'Icons-index' */ '@/views/icons/icons.vue'
-//           )
-//       }
-//     ]
-//   }
-// ]
-
 const router = new VueRouter({
   routes: commonRoute
 })

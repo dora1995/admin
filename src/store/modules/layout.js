@@ -1,3 +1,5 @@
+// 该文件放置layout相关的vuex配置，一般情况下不会修改到此文件
+
 const state = {
   sideBarOpened: sessionStorage.getItem('layout_sideBar_opened')
     ? sessionStorage.getItem('layout_sideBar_opened')

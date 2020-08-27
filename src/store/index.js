@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 import getters from './getters'
 
 Vue.use(Vuex)
-
 const path = require('path')
+
 // 将modules文件夹下的js文件都找出来
 const files = require.context('./modules', false, /\.js$/)
 const modules = {}
